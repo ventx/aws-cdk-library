@@ -10,7 +10,6 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:ventx/aws-cdk-library.git"
-
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -42,9 +41,11 @@
   "peerDependencies": {
     "@aws-cdk/cdk": "^0.34.0",
     "@aws-cdk/aws-sns": "^0.34.0",
-    "@aws-cdk/aws-sqs": "^0.34.0"
+    "@aws-cdk/aws-sqs": "^0.34.0",
+    "@aws-cdk/aws-cloudformation": "^0.34.0"
   },
   "dependencies": {
+    "@aws-cdk/aws-cloudformation": "^0.34.0",
     "@aws-cdk/aws-sns": "^0.34.0",
     "@aws-cdk/aws-sqs": "^0.34.0",
     "@aws-cdk/cdk": "^0.34.0"
