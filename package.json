@@ -1,0 +1,24 @@
+{
+  "name": "aws-cdk-library",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "nodeunit test/test.*.js"
+  },
+  "devDependencies": {
+    "@types/nodeunit": "^0.0.30",
+    "nodeunit": "^0.11.2",
+    "typescript": "^3.3.3333"
+  },
+  "peerDependencies": {
+    "@aws-cdk/cdk": "^0.34.0"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-sns": "^0.34.0",
+    "@aws-cdk/aws-sqs": "^0.34.0",
+    "@aws-cdk/cdk": "^0.34.0"
+  }
+}
