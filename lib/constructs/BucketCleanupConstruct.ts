@@ -12,7 +12,7 @@ export class BucketCleanupFunction extends cdk.Construct {
     super(scope, id)
 
     const cleanupLambda = new lambda.Function(this, 'BucketCleanupLambda', {
-      handler: 'index.handler',
+      handler: 'index.lambda_handler',
       runtime: lambda.Runtime.Python37,
       code: new lambda.InlineCode(`
 import json
