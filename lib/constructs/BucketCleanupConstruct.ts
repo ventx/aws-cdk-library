@@ -48,7 +48,7 @@ def sendResponseCfn(event, context, responseStatus):
      `)
     })
 
-    const custom = new cloudformation.CfnCustomResource(this,'', {
+    const custom = new cloudformation.CfnCustomResource(this,'CleanupFunctionCustomResource', {
       serviceToken: cleanupLambda.functionArn,
     })
 
