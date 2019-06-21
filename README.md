@@ -11,6 +11,8 @@ The library contains the following components
 A AWS CloudFormation custom resource that deletes all files from a s3 bucket when the stack is deleted. This allows CloudFormation to delete the Bucket even when it has contents. __Attention:__ This may cause your data to be lost if you do not know what you are doing!
 
 Usage (pyhton):
+`pip install ventx.aws-cdk-library`
+
 ```python
 #import the awslib
 from ventx import aws_cdk_library as awslib 
