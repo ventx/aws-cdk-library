@@ -4,7 +4,7 @@ import cdk = require('@aws-cdk/cdk');
 import cloudformation = require('@aws-cdk/aws-cloudformation')
 
 export interface BucketCleanupFunctionProps {
-  bucket: s3.IBucket
+  readonly bucket: s3.IBucket
 }
 
 export class BucketCleanupFunction extends cdk.Construct {
