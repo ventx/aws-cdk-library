@@ -52,8 +52,7 @@ def sendResponseCfn(event, context, responseStatus):
       serviceToken: cleanupLambda.functionArn,
     })
 
-    props.bucket.grantRead(cleanupLambda)
-    props.bucket.grantDelete(cleanupLambda)
+    props.bucket.grantReadWrite(cleanupLambda)
 
     custom.addPropertyOverride('BucketName', props.bucket.bucketName)
     custom.addDependsOn(props.bucket.node.findChild('Resource') as s3.CfnBucket)
