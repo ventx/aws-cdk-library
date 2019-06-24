@@ -1,5 +1,5 @@
 {
-  "name": "aws-cdk-library",
+  "name": "@ventx/aws-cdk-library",
   "version": "0.1.2",
   "license": "MIT",
   "homepage": "https://ventx.de",
