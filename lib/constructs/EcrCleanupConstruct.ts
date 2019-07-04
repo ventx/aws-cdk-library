@@ -1,14 +1,14 @@
 import lambda = require('@aws-cdk/aws-lambda')
-import s3 = require('@aws-cdk/aws-s3')
 import cdk = require('@aws-cdk/core');
 import cloudformation = require('@aws-cdk/aws-cloudformation')
+import ecr = require('@aws-cdk/aws-ecr')
 
-export interface BucketCleanupFunctionProps {
-  readonly bucket: s3.IBucket
+export interface EcrCleanupFunctionProps {
+  repository: ecr.Repository;
 }
 
 export class BucketCleanupFunction extends cdk.Construct {
-  constructor(scope: cdk.Construct, id: string, props: BucketCleanupFunctionProps) {
+  constructor(scope: cdk.Construct, id: string, props: EcrCleanupFunctionProps) {
     super(scope, id)
 
     const cleanupLambda = new lambda.Function(this, 'BucketCleanupLambda', {
@@ -21,13 +21,9 @@ from botocore.vendored import requests
 
 def lambda_handler(event, context):
     try:
-        bucket = event['ResourceProperties']['BucketName']
+        repositoryArn = event['ResourceProperties']['RepositoryArn']
 
-        if event['RequestType'] == 'Delete':
-            s3 = boto3.resource('s3')
-            bucket = s3.Bucket(bucket)
-            for obj in bucket.objects.filter():
-                s3.Object(bucket.name, obj.key).delete()
+        
 
         sendResponseCfn(event, context, "SUCCESS")
     except Exception as e:
@@ -52,9 +48,7 @@ def sendResponseCfn(event, context, responseStatus):
       serviceToken: cleanupLambda.functionArn,
     })
 
-    props.bucket.grantReadWrite(cleanupLambda)
-
-    custom.addPropertyOverride('BucketName', props.bucket.bucketName)
-    custom.addDependsOn(props.bucket.node.defaultChild as s3.CfnBucket)
+    custom.addPropertyOverride('RepositoryArn', props.repository.repositoryArn)
+    custom.addDependsOn(props.repository.node.defaultChild as cdk.CfnResource)
   }
 }
