@@ -27,14 +27,10 @@ Usage (typescript):
 
 ```typescript
 //import
-
 import cdkLib = require('@ventx/aws-cdk-library')
 
 ...
-
 new cdkLib(this, 'bucketCleanupFunction', {
         bucket: YourBucketToBeEmptied
 })
-
-
 ```
