@@ -1,6 +1,6 @@
 import lambda = require('@aws-cdk/aws-lambda')
 import s3 = require('@aws-cdk/aws-s3')
-import cdk = require('@aws-cdk/cdk');
+import cdk = require('@aws-cdk/core');
 import cloudformation = require('@aws-cdk/aws-cloudformation')
 
 export interface BucketCleanupFunctionProps {
@@ -13,7 +13,7 @@ export class BucketCleanupFunction extends cdk.Construct {
 
     const cleanupLambda = new lambda.Function(this, 'BucketCleanupLambda', {
       handler: 'index.lambda_handler',
-      runtime: lambda.Runtime.Python37,
+      runtime: lambda.Runtime.PYTHON_3_7,
       code: new lambda.InlineCode(`
 import json
 import boto3

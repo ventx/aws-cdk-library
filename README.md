@@ -21,3 +21,20 @@ from ventx import aws_cdk_library as awslib
         # attach the cleanup function to a bucket you want to be emptied when the stack is deleted
         awslib.BucketCleanupFunction(self, 'jsonFileBucketCleanup', bucket=YourBucketToBeEmptied)
 ```
+
+Usage (typescript):
+`npm install --save @ventx/aws-cdk-library` 
+
+```typescript
+//import
+
+import cdkLib = require('@ventx/aws-cdk-library')
+
+...
+
+new cdkLib(this, 'bucketCleanupFunction', {
+        bucket: YourBucketToBeEmptied
+})
+
+
+```
