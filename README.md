@@ -65,7 +65,7 @@ __Usage - Typescript:__
 
 ### BastionHost
 
-The `BastionHost` Construct creates a self healing single instance that is availbale over a public IP address. The ASG notifications trigger an AWS Lambda function, which remapps an elastic IP to the newest instance in the ASG.
+The `BastionHost` Construct creates a self healing single instance that is available over a public IP address. The ASG notification triggers an AWS Lambda function, which attaches the same elastic IP to the newest instance in the ASG.
 
 __Usage - Python:__
 
