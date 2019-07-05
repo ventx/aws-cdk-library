@@ -8,6 +8,7 @@ A collection of usefull AWS CDK Constructs. To learn more about the AWS CDK chec
 - [Components](#Components)
   - [BucketCleanupFunction](#BucketCleanupFunction)
   - [SamlProvider](#SamlProvider)
+  - [BastionHost](#BastionHost)
 
 ## Installation
 
@@ -60,4 +61,42 @@ __Usage - Typescript:__
     const samlProvider = new vlib.SamlProvider(this, 'samlProviderTest', {
       metadataDocument: metadata
     })
+```
+
+### BastionHost
+
+The `BastionHost` Construct creates a self healing single instance that is availbale over a public IP address. The ASG notifications trigger an AWS Lambda function, which remapps an elastic IP to the newest instance in the ASG.
+
+__Usage - Python:__
+
+```python
+        network = ec2.Vpc(self, 'main', maxAzs=1)
+
+        bastionHost = vlib.BastionHost(self, 'bastionHost',
+            image=ec2.AmazonLinuxImage(),
+            vpc=network,
+            keyName= 'raphaels-key',
+            peers= [ec2.Peer.any_ipv4()]
+        )
+
+        # now you can add the bastionHost.internalSshSecurityGroup to your backend instance to allow SSH communciations.
+        # the public ip is available at bastionHost.publicIp
+```
+
+__Usage - Typescript:__
+
+```typescript
+    const network = new ec2.Vpc(this, 'main', {
+      maxAZs: 1
+    })
+
+    const bastionHost = new vlib.BastionHost(this, 'bastionHost', {
+      image: new ec2.AmazonLinuxImage(), // A default Amazon Linux does not make a good bastion host!
+      peers: [ec2.Peer.anyIpv4()], // anyIpv4 should probably not be used in Production!
+      vpc: network,
+      keyName: 'raphaels-key'
+    })
+
+    // now you can add the bastionHost.internalSshSecurityGroup to your backend instance to allow SSH communciations.
+    // the public ip is available at bastionHost.publicIp
 ```
