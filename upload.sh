@@ -1,6 +1,6 @@
 #!/bin/bash
 npm i
-rm -rf dist/
+rm -rf ./dist/
 
 mv README.md README.md.backup
 cp PyPi_Documentation.md README.md
