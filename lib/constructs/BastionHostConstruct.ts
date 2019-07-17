@@ -12,6 +12,7 @@ export interface BastionHostProps {
   readonly image: ec2.IMachineImage;
   readonly peers: ec2.IPeer[];
   readonly keyName: string;
+  readonly subnets?: ec2.SubnetSelection;
 }
 export class BastionHost extends cdk.Construct {
   readonly internalSshSecurityGroup: ec2.ISecurityGroup
@@ -35,7 +36,7 @@ export class BastionHost extends cdk.Construct {
       notificationsTopic: snsTopic,
       instanceType: props.instanceType ? props.instanceType : new ec2.InstanceType('t3.micro'),
       machineImage: props.image,
-      vpcSubnets: {
+      vpcSubnets: props.subnets ? props.subnets : {
         onePerAz: true,
         subnetType: ec2.SubnetType.PUBLIC
       }
