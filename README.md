@@ -9,6 +9,7 @@ A collection of usefull AWS CDK Constructs. To learn more about the AWS CDK chec
   - [BucketCleanupFunction](#BucketCleanupFunction)
   - [SamlProvider](#SamlProvider)
   - [BastionHost](#BastionHost)
+- [Support](#Support)
 
 ## Installation
 
@@ -100,3 +101,7 @@ __Usage - Typescript:__
     // now you can add the bastionHost.internalSshSecurityGroup to your backend instance to allow SSH communciations.
     // the public ip is available at bastionHost.publicIp
 ```
+
+## Support
+
+If you got any problems or questions please create a [GitHub issue](https://github.com/ventx/aws-cdk-library/issues)
