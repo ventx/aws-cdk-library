@@ -14,6 +14,7 @@ export interface BastionHostProps {
   readonly keyName: string;
   readonly subnets?: ec2.SubnetSelection;
 }
+
 export class BastionHost extends cdk.Construct {
   readonly internalSshSecurityGroup: ec2.ISecurityGroup
   readonly publicIp: string
@@ -28,7 +29,7 @@ export class BastionHost extends cdk.Construct {
 
     this.publicIp = externalIp.ref
     this.createLambda(snsTopic, externalIp.ref)
-    this.createAutoScalingGroup(this.internalSshSecurityGroup, externalSshSG, {
+    const asg = new autoscaling.AutoScalingGroup(this, 'bastion-selfheal-ASG', {
       vpc: props.vpc,
       allowAllOutbound: true,
       associatePublicIpAddress: false,
@@ -41,13 +42,9 @@ export class BastionHost extends cdk.Construct {
         subnetType: ec2.SubnetType.PUBLIC
       }
     })
-  }
 
-  private createAutoScalingGroup(internalSshSG: ec2.ISecurityGroup, externalSshSG: ec2.ISecurityGroup, asgProps: autoscaling.AutoScalingGroupProps) {
-    const autoScalingGroup = new autoscaling.AutoScalingGroup(this, 'bastion-selfheal-ASG', asgProps)
-
-    autoScalingGroup.addSecurityGroup(internalSshSG)
-    autoScalingGroup.addSecurityGroup(externalSshSG)
+    asg.addSecurityGroup(externalSshSG)
+    asg.addSecurityGroup(this.internalSshSecurityGroup)
   }
 
   private createLambda(topic: sns.ITopic, ip: string) {
@@ -64,19 +61,11 @@ export class BastionHost extends cdk.Construct {
     const lambdaDocument = new iam.PolicyDocument();
     const associateAddressStatement = new iam.PolicyStatement();
     associateAddressStatement.addActions("ec2:AssociateAddress");
-    associateAddressStatement.addResources("*");
+    associateAddressStatement.addResources();
     const logStatement = new iam.PolicyStatement()
-    logStatement.addActions("logs:CreateLogGroup");
-    logStatement.addActions("logs:CreateLogStream");
-    logStatement.addActions("logs:PutLogEvents");
-    logStatement.addResources("*")
-    lambdaDocument.addStatements(associateAddressStatement);
-    lambdaDocument.addStatements(logStatement)
-
-    const trustDocument = new iam.PolicyDocument();
-    const trustStatement = new iam.PolicyStatement();
-    trustStatement.addActions("sts:AssumeRole");
-    trustDocument.addStatements(trustStatement);
+    logStatement.addActions("logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents");
+    logStatement.addAllResources()
+    lambdaDocument.addStatements(associateAddressStatement, logStatement);
 
     return new iam.Role(this, "LambdaExecutionRole", {
       assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
@@ -126,7 +115,7 @@ export class BastionHost extends cdk.Construct {
       vpc: vpc
     })
 
-    securityGroup.addIngressRule(securityGroup, new ec2.Port({ fromPort: 22, toPort: 22, stringRepresentation: '22', protocol: ec2.Protocol.TCP }))
+    securityGroup.addIngressRule(securityGroup, ec2.Port.tcp(22))
     return securityGroup
   }
 
@@ -136,7 +125,7 @@ export class BastionHost extends cdk.Construct {
     })
 
     peers.forEach(peer => {
-      sshSecurityGroup.addIngressRule(peer, new ec2.Port({ fromPort: 22, toPort: 22, stringRepresentation: '22', protocol: ec2.Protocol.TCP }))
+      sshSecurityGroup.addIngressRule(peer, ec2.Port.tcp(22))
     });
 
     return sshSecurityGroup
