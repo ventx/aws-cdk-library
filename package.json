@@ -1,6 +1,6 @@
 {
   "name": "@ventx/aws-cdk-library",
-  "version": "0.2.4",
+  "version": "0.2.7",
   "license": "MIT",
   "homepage": "https://ventx.de",
   "author": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:ventx/aws-cdk-library.git"
+    "url": "https://github.com/ventx/aws-cdk-library.git"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -48,15 +48,15 @@
     "@aws-cdk/aws-lambda-event-sources": "^1.16.3"
   },
   "dependencies": {
-    "@aws-cdk/aws-autoscaling": "^1.16.3",
-    "@aws-cdk/aws-cloudformation": "^1.16.3",
-    "@aws-cdk/aws-ec2": "^1.16.3",
-    "@aws-cdk/aws-iam": "^1.16.3",
-    "@aws-cdk/aws-lambda": "^1.16.3",
-    "@aws-cdk/aws-lambda-event-sources": "^1.16.3",
-    "@aws-cdk/aws-s3": "^1.16.3",
-    "@aws-cdk/aws-sns": "^1.16.3",
-    "@aws-cdk/aws-sqs": "^1.16.3",
-    "@aws-cdk/core": "^1.16.3"
+    "@aws-cdk/aws-autoscaling": "^1.17.1",
+    "@aws-cdk/aws-cloudformation": "^1.17.1",
+    "@aws-cdk/aws-ec2": "^1.17.1",
+    "@aws-cdk/aws-iam": "^1.17.1",
+    "@aws-cdk/aws-lambda": "^1.17.1",
+    "@aws-cdk/aws-lambda-event-sources": "^1.17.1",
+    "@aws-cdk/aws-s3": "^1.17.1",
+    "@aws-cdk/aws-sns": "^1.17.1",
+    "@aws-cdk/aws-sqs": "^1.17.1",
+    "@aws-cdk/core": "^1.17.1"
   }
 }
