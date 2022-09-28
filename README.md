@@ -1,3 +1,9 @@
+# END OF LIFE - DO NOT USE
+
+AWS CDK evovled rapidly in the last 3 years since this constructs have been created. All constructs here have been replaced by official Features. Please use out of the box functinality instead of this library.
+
+---
+
 # Ventx AWS CDK Library <!-- omit in toc -->
 
 A collection of usefull AWS CDK Constructs. To learn more about the AWS CDK checkout the [aws-cdk github repo](https://github.com/awslabs/aws-cdk)
